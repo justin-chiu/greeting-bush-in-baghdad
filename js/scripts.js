@@ -212,3 +212,23 @@ function toStanza(stanzaFrom, stanzaTo) { // when specific stanza triggered
         return "activeBlock = " + activeBlock;
     }
 }
+
+/*
+
+To do:
+
+√ Experiment with colours
+√ Experiment with images
+Implement colours and images
+Sketch main animations
+Sequential function
+Sketch main interactions
+Easing functions
+Program main interactions
+Program stanza
+Program scroll down
+Responsive
+Info
+Notes
+
+*/

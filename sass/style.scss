@@ -5,6 +5,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+$breakpoint-mobile-landscape: 500px;
+$breakpoint-tablet: 768px;
+
 body {
     padding: 0;
     margin: 0;
@@ -41,7 +44,12 @@ body {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
 
-    @media (min-width: 768px) {
+    @media (min-width: $breakpoint-mobile-landscape) {
+        padding-left: 1.75rem;
+        padding-right: 1.75rem;
+    }
+
+    @media (min-width: $breakpoint-tablet) {
         padding-left: 2.5rem;
         padding-right: 2.5rem;
     }
@@ -61,7 +69,7 @@ body {
     flex-direction: column-reverse;
     justify-content: space-between;
 
-    @media (min-width: 768px) {
+    @media (min-width: $breakpoint-tablet) {
         flex-direction: row;
         justify-content: start;
     }
@@ -70,10 +78,17 @@ body {
 .page-main-sidebar-left {
 
     display: flex;
+    align-items: center;
 
-    @media (min-width: 768px) {
+    @media (min-width: $breakpoint-mobile-landscape) {
+        justify-content: flex-end;
+    }
+
+    @media (min-width: $breakpoint-tablet) {
+        width: 6rem;
         padding-right: 3rem;
         flex-direction: column;
+        justify-content: flex-start;
     }
 
     @media (min-width: 992px) {
@@ -83,9 +98,11 @@ body {
 
 .page-content-wrapper {
 
-    @media (min-width: 568px) {
+    width: 100%;
+
+    @media (min-width: $breakpoint-mobile-landscape) {
     }
-    @media (min-width: 768px) {
+    @media (min-width: $breakpoint-tablet) {
     }
     @media (min-width: 992px) {
     }
@@ -94,14 +111,26 @@ body {
 }
 
 .page-content-container {
+    
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-    @media (min-width: 568px) {
+    @media (min-width: $breakpoint-mobile-landscape) {
     }
-    @media (min-width: 768px) {
+    @media (min-width: $breakpoint-tablet) {
     }
     @media (min-width: 992px) {
     }
     @media (min-width: 1200px) {
+    }
+}
+
+.page-bottom-blk {
+    display: flex;
+    @media (min-width: $breakpoint-tablet) {
+        justify-content: flex-end;
     }
 }
 
@@ -165,7 +194,7 @@ figure {
 
     margin-right: 1rem;
 
-    @media (min-width: 768px) {
+    @media (min-width: $breakpoint-tablet) {
         margin-bottom: 1rem;
         margin-right: 0;
     }
@@ -173,9 +202,37 @@ figure {
 }
 
 .stanza-nav-container {
-    display: flex;
 
-    @media (min-width: 768px) {
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: $breakpoint-tablet) {
+        flex-direction: row;
+    }
+}
+
+.stanza-status-container {
+
+    height: 0.25rem;
+    width: 100%;
+
+    @media (min-width: $breakpoint-tablet) {
+        height: 100%;
+        width: 0.25rem;
+    }
+}
+
+.status-line {
+    width: 100%;
+
+}
+
+.stanza-nav {
+
+    display: flex;
+    flex-grow: 1;
+
+    @media (min-width: $breakpoint-tablet) {
         flex-direction: column;
     }
 }
@@ -187,6 +244,7 @@ figure {
 
 .poem-block {
     display: none;
+    margin-bottom: 2rem;
 
     &.ready {
         display: block;
@@ -211,5 +269,9 @@ figure {
 }
 
 .poem-highlight {
+
+}
+
+.instruction-scroll-down {
 
 }
