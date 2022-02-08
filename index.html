@@ -5,7 +5,11 @@
     <title>Greeting Bush in Baghdad • Interactive Poetry Breakdown</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <!-- fonts -->
+    <link rel="stylesheet" href="https://use.typekit.net/bda4gqv.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@200;400;500;700&display=swap" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -13,18 +17,18 @@
     <div class="page-wrapper" id="poem-page-wrapper">
         <div class="page-container">
             <header class="page-top-blk">
-                <div class="header-text-left">
-                    Interactive Poetry Breakdown
+                <div class="header-text-left caps-sans-serif">
+                    Interactive <b class="sans-serif-bold">Poetry Breakdown</b>
                 </div>
                 <div class="header-text-right">
-                    <button class="header-info-button" alt="information">
+                    <button class="header-info-button serif-alt" alt="information">
                         i
                     </button>
                 </div>
             </header>
             <section class="page-main-blk">
                 <nav class="page-main-sidebar-left">
-                    <div class="stanza-nav-heading">
+                    <div class="stanza-nav-heading serif-alt">
                         stanza
                     </div>
                     <div class="stanza-nav-container">
@@ -62,20 +66,24 @@
                     <div class="page-content-container">
                         <div class="poem-block" id="pm-blk-0">
                             <div class="poem-sub-block" id="pm-sub-title">
-                                <h1>
-                                    Greeting <a class="poem-highlight">Bush in Baghdad</a>
+                                <h1 class="serif-heading">
+                                    <span>Greeting </span><br><a class="poem-highlight"><span>Bush in </span><br><span>Baghdad</span></a>
                                 </h1>
                             </div>
                             <div class="poem-sub-block" id="pm-sub-poet">
-                                <address class="poem-author-text">
-                                    a poem by <a class="poem-highlight" rel="author">David Krieger</a>
+                                <div class="square-icon">
+                                </div>
+                                <address class="poem-author-text caps-sans-serif">
+                                    by <a class="poem-highlight sans-serif-bold" rel="author">David Krieger</a>
                                 </address>
                             </div>
+                            <img src="img/bush_10dollar_coin_liberia_ucoin_2_tint.png" class="poem-img" id="img-bush-coin" alt="commemorative $10 coin from Liberia showing George W. Bush, the 43rd President of the United States, and an American flag">
+                            <img src="img/oxford_2_edit_tint.png"  class="poem-img" id="img-oxford" draggable="true" alt="an oxford shoe">
                         </div>
                         <div class="poem-block" id="pm-blk-1">
                             <div class="poem-sub-block" id="pm-sub-1-0">
                                 <figure>
-                                    <blockquote id="pm-ln-1-0-0">"This is a farewell kiss, you dog."</blockquote>
+                                    <blockquote id="pm-ln-1-0-0">“This is a farewell kiss, you dog.”</blockquote>
                                     <figcaption id="pm-ln-1-0-1">&mdash;<a class="poem-highlight">Muntader
                                             al&#8209;Zaidi</a></figcaption>
                                 </figure>
@@ -137,7 +145,8 @@
                         </div>
                         <div class="page-bottom-blk">
                             <div class="instruction-scroll-down">
-                                scroll down
+                                <div class="scroll-down-text serif-alt">scroll down</div>
+                                <img src="img/arrow_scroll_down.svg"  id="img-down-arrow">
                             </div>
                         </div>
                     </div>
