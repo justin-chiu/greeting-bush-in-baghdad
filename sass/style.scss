@@ -7,6 +7,13 @@
 
 $breakpoint-mobile-landscape: 500px;
 $breakpoint-tablet: 768px;
+$breakpoint-laptop: 992px;
+$breakpoint-desktop: 1200px;
+
+$dark-grey: #373737;
+$white: #FFFFFF;
+$black: #000000;
+$orange: #927734;
 
 body {
     padding: 0;
@@ -39,8 +46,24 @@ body {
     display: flex;
     flex-direction: column;
 
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    // padding-top: 2rem;
+    // padding-bottom: 2rem;
+    // padding-left: 1.25rem;
+    // padding-right: 1.25rem;
+
+    @media (min-width: $breakpoint-mobile-landscape) {
+        // padding-left: 1.75rem;
+        // padding-right: 1.75rem;
+    }
+
+    @media (min-width: $breakpoint-tablet) {
+        // padding-left: 2.5rem;
+        // padding-right: 2.5rem;
+    }
+
+}
+
+.page-top-blk, .page-main-blk {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
 
@@ -54,12 +77,21 @@ body {
         padding-right: 2.5rem;
     }
 
+    @media (min-width: $breakpoint-laptop) {
+        padding-left: 6rem;
+        padding-right: 6rem;
+    }
 }
 
 .page-top-blk {
     display: flex;
     justify-content: space-between;
-    height: 20%;
+    // height: 20%;
+
+    background-color: $dark-grey;
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .page-main-blk {
@@ -69,6 +101,8 @@ body {
     flex-direction: column-reverse;
     justify-content: space-between;
 
+    margin-top: 18vh;
+    margin-bottom: 4rem;
     @media (min-width: $breakpoint-tablet) {
         flex-direction: row;
         justify-content: start;
@@ -85,13 +119,15 @@ body {
     }
 
     @media (min-width: $breakpoint-tablet) {
-        width: 6rem;
+        width: 7rem;
         padding-right: 3rem;
         flex-direction: column;
         justify-content: flex-start;
     }
 
-    @media (min-width: 992px) {
+    @media (min-width: $breakpoint-laptop) {
+        width: 8rem;
+        padding-right: 5rem;
     }
 
 }
@@ -138,20 +174,32 @@ body {
 
 button {
     height: fit-content;
+    border-radius: 0;
+    border-width: 0;
+    background-color: inherit;
+    color: inherit;
+
 }
 
 h1 {
     font-size: 2.5rem;
     margin-top: 0;
     margin-bottom: 0.4em;
+
+    @media (min-width: $breakpoint-laptop) {
+        font-size: 6.5rem;
+        line-height: 0.85em;
+    }
 }
 
-p {
-    font-size: 1.5rem;
+p, blockquote, figcaption {
+    font-size: 2.25rem;
+    line-height: 1.3em;
+    margin-bottom: 0;
+
 }
 
 blockquote, figcaption {
-    font-size: 1.5rem;
 }
 
 a {
@@ -160,6 +208,13 @@ a {
 
 address {
     font-style: normal;
+    font-family: 'Sarabun', sans-serif;
+    text-transform: uppercase;
+    
+
+    @media (min-width: $breakpoint-laptop) {
+
+    }
 }
 
 blockquote {
@@ -169,6 +224,32 @@ blockquote {
 figure {
     margin-left: 0;
     margin-right: 0;
+}
+
+span {
+    font-size: inherit;
+}
+
+// ---------- TEXT -----------
+
+.caps-sans-serif {
+    font-family: 'Sarabun', sans-serif;
+    text-transform: uppercase;
+}
+
+.sans-serif-bold {
+    font-weight: 700;
+    font-size: inherit;
+}
+
+p, blockquote, figcaption, .serif-heading {
+    font-family: coranto-2-headline, serif;
+    margin: 0;
+}
+
+.serif-alt {
+    font-family: le-monde-livre-std, serif;
+    font-weight: 500;
 }
 
 // ---------- SCROLLER -----------
@@ -188,11 +269,19 @@ figure {
     height: 2000px;
 }
 
+// ---------- HEADER ----------
+
+.header-text-left {
+    font-size: 0.875rem;
+}
+
+.header-info-button {
+
+}
+
 // ---------- NAV ----------
 
 .stanza-nav-heading {
-
-    margin-right: 1rem;
 
     @media (min-width: $breakpoint-tablet) {
         margin-bottom: 1rem;
@@ -238,12 +327,24 @@ figure {
 }
 
 .stanza-nav-button {
+    font-family: 'Sarabun', sans-serif;
+    font-weight: 200;
+    font-size: 1.75rem;
+    line-height: 1.1em;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 // ---------- POEM ----------
 
+#poem-page-wrapper {
+    background-color: #927734;
+    color: $white;
+}
+
 .poem-block {
     display: none;
+    position: relative;
     margin-bottom: 2rem;
 
     &.ready {
@@ -255,23 +356,71 @@ figure {
     opacity: 0;
     transition: opacity 0.5s;
 
+    margin-bottom: 1.5rem;
+
     &.active {
         opacity: 1;
     }
 }
 
 .poem-line {
-
 }
 
-.poem-author-text {
-    font-size: 1.5rem;
+.square-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    background-color: $black;
+    margin-top: 0.2rem;
+    margin-right: 0.5rem;
 }
 
 .poem-highlight {
 
 }
 
-.instruction-scroll-down {
+.poem-img {
+    position: absolute;
+    mix-blend-mode: hard-light;
+}
 
+// ----------- PARTS OF POEM -----------
+
+#pm-sub-title {
+    position: relative;
+    z-index: 20;
+}
+
+#pm-sub-poet {
+    display: flex;
+    align-items: center;
+}
+
+.poem-author-text {
+    font-size: 1.5rem;
+}
+
+.instruction-scroll-down {
+    display: flex;
+}
+
+.scroll-down-text {
+    font-size: 1.5rem;
+    color: black;
+    margin-right: 1rem;
+}
+
+#img-down-arrow {
+    height: 1.6rem;
+}
+
+#img-bush-coin {
+    top: 7.5rem;
+    left: 11rem;
+    width: 8rem;
+}
+
+#img-oxford {   
+    width: 26rem;
+    top: 7rem;
+    left: 12rem;
 }
