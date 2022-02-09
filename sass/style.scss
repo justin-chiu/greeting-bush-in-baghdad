@@ -10,7 +10,7 @@ $breakpoint-tablet: 768px;
 $breakpoint-laptop: 992px;
 $breakpoint-desktop: 1200px;
 
-$dark-grey: #373737;
+$dark-grey: #664949;
 $white: #FFFFFF;
 $black: #000000;
 $orange: #927734;
@@ -337,11 +337,6 @@ p, blockquote, figcaption, .serif-heading {
 
 // ---------- POEM ----------
 
-#poem-page-wrapper {
-    background-color: #927734;
-    color: $white;
-}
-
 .poem-block {
     display: none;
     position: relative;
@@ -385,6 +380,15 @@ p, blockquote, figcaption, .serif-heading {
 
 // ----------- PARTS OF POEM -----------
 
+#poem-page-wrapper {
+    background-color: #927734;
+    color: $white;
+}
+
+#poem-header {
+    // transform: translateY(-100%);
+}
+
 #pm-sub-title {
     position: relative;
     z-index: 20;
@@ -405,7 +409,6 @@ p, blockquote, figcaption, .serif-heading {
 
 .scroll-down-text {
     font-size: 1.5rem;
-    color: black;
     margin-right: 1rem;
 }
 
