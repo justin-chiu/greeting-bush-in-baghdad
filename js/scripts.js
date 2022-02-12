@@ -14,25 +14,45 @@ let scroller = document.querySelector('.page-scroller');
 const idPrefix = { // id prefixes of repeated elements
     "stanza-button": "stz-nav-"
 }
-const poemBlockAnimations = [ // on/off functions for each .poem-block
+
+let defaultAnim = function (blockNum, dir, duration, callback) { // default animation for every poem block
+    if (dir == "in") {
+        poemBlocks[blockNum].classList.add("ready");
+        poemBlocks[blockNum].classList.add("animate-in");
+
+        setTimeout (function () {
+            console.log("poem-blk-" + blockNum + " ON");
+            callback();
+        },duration);
+    }
+    else if (dir == "out") {
+        poemBlocks[blockNum].classList.add("animate-out");
+
+        setTimeout (function () {
+            poemBlocks[blockNum].classList.remove("animate-in");
+            poemBlocks[blockNum].classList.remove("animate-out");
+            poemBlocks[blockNum].classList.remove("ready");
+            console.log("poem-blk-" + blockNum + " OFF");
+            callback();
+        },duration);
+    }
+}
+
+const poemBlockAnimations = [ // animations and custom instructions for each .poem-block 
     {
         "on-animation": function (callback) {
-            console.log("poem-blk-0 ON");
-            callback ();
+            defaultAnim (0, "in", 1500, callback);
         },
         "off-animation": function (callback) {
-            console.log("poem-blk-0 OFF");
-            callback ();
+            defaultAnim (0, "out", 900, callback);
         }
     },
     {
         "on-animation": function (callback) {
-            console.log("poem-blk-1 ON");
-            callback ();
+            defaultAnim (1, "in", 5500, callback);
         },
         "off-animation": function (callback) {
-            console.log("poem-blk-1 OFF");
-            callback ();
+            defaultAnim (1, "out",1000, callback);
         }
     },
     {
@@ -86,7 +106,7 @@ const poemBlockAnimations = [ // on/off functions for each .poem-block
         }
     }
 ]
-let activeBlock = 0; // which part of the poem user is on
+let activeBlock; // which part of the poem user is on
 let transitionStatus = false; // indicates whether running transition
 const scrollDistance = 300; // scroll distance to trigger next or previous transition
 
@@ -105,8 +125,6 @@ function scrollerSetup() {
     return "scroller.style.height = " + scroller.style.height + ", document.scrollingElement.scrollTop = " + document.scrollingElement.scrollTop;
 }
 
-console.log(scrollerSetup()); // setup scroller on load
-
 window.addEventListener('resize', function (e) { // should setup scroller whenever viewport is resized
     console.log(scrollerSetup());
 });
@@ -114,54 +132,18 @@ window.addEventListener('resize', function (e) { // should setup scroller whenev
 
 
 
-// function controls easing of most animations
-
-function runAnimation(property, prefix, suffix, fromValue, toValue, time, easing, doAfter) {
-
-    const frameLength = 40; // 25 fps --> 40 milliseconds per frame
-
-    const repsTotal = Math.round (time / frameLength); // how many frames needed
-    const valueDiff = toValue - fromValue; // current value of property
-    const increment = 1 / repsTotal; // each frame represents what portion of the animation (from 0 to 1)
-
-    property = prefix + fromValue + suffix;
-    var repsSoFar = 0; // how many times the interval function has run
-
-    var intervalAnimation = setInterval(function () {
-
-        if (repsSoFar >= repsTotal) { // when the function has repeated enough times
-            if (doAfter !== null && doAfter !== undefined) {
-                doAfter (); // callback
-            }
-            clearInterval (intervalAnimation); // will this work?
-        }
-
-        else {
-            repsSoFar++;
-            var incrementSoFar = repsSoFar * increment; // out of 1, how far along is the animation in terms of time?
-            var valueAbs = easing (incrementSoFar); // out of 1, how far along is the animation, in terms of the property value?
-            var valueReal = valueAbs * valueDiff; // converting the value out of 1 to a real value.
-
-            property = prefix + valueReal + suffix; // setting the value.
-        }
-
-    }, frameLength);
-}
-
-// easing functions
-
-function linear (x) {
-    return x;
-}
-
-function easeInOutQuart (x) { // x is absolute progress of animation from 0 to 1
-    return x < 0.5 ? 8 * x * x * x * x : 1 - pow(-2 * x + 2, 4) / 2;
-}
-
-
-
-
 // set event listeners
+
+window.addEventListener ("load", function () { // on load
+    console.log(scrollerSetup()); // setup scroller on load
+    transitionStatus = true;
+    poemBlockAnimations[0]["on-animation"](function () {
+        document.scrollingElement.scrollTop = scrollDistance;
+        activeBlock = 0;
+        transitionStatus = false;
+        console.log("activeBlock = " + activeBlock);
+    });
+});
 
 for (let i = 0; i < stanzaButtons.length; i++) { // navigate using stanza buttons
     stanzaButtons[i].addEventListener("click", function (e) {
@@ -209,41 +191,6 @@ window.addEventListener("scroll", function (e) { // navigate using scroll wheel
 });
 
 
-
-
-// animate title and poet name on load
-
-function sampleAnimation() {
-    let startBlock = document.querySelector("#pm-blk-0");
-    let startSubBlocks = startBlock.children;
-
-    startBlock.classList.add("ready");
-
-    for (let i = 0; i < startSubBlocks.length; i++) {
-        startSubBlocks[i].classList.add("active"); // not animating on first try
-    }
-}
-
-sampleAnimation();
-
-// on load
-
-function showHeader (callback) {
-
-
-
-    /*runAnimation ( // trying to run an animation with custom easing
-            document.querySelector('#poem-header').style.transform,
-            "translateY(",
-            "%);",
-            -100,
-            0,
-            300,
-            linear,
-            callback
-        );*/
-
-}
 
 
 // navigate to next, previous, or specific stanza
@@ -307,7 +254,7 @@ To do:
 √ Experiment with colours
 √ Experiment with images
 √ Implement colours and images
-Sketch main animations
+√ Sketch main animations
 √ Sequential function
 Program main interactions
 Program stanza
