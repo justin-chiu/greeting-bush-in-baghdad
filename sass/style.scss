@@ -5,12 +5,14 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+@import 'override.scss';
+
 $breakpoint-mobile-landscape: 500px;
 $breakpoint-tablet: 768px;
 $breakpoint-laptop: 992px;
 $breakpoint-desktop: 1200px;
 
-$dark-grey: #664949;
+$dark-grey: #333333;
 $white: #FFFFFF;
 $black: #000000;
 $orange: #927734;
@@ -151,7 +153,6 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 
     @media (min-width: $breakpoint-mobile-landscape) {
     }
@@ -170,25 +171,15 @@ body {
     }
 }
 
-// ---------- ELEMENTS ------------
-
-button {
-    height: fit-content;
-    border-radius: 0;
-    border-width: 0;
-    background-color: inherit;
-    color: inherit;
-
-}
+// ---------- TEXT -----------
 
 h1 {
     font-size: 2.5rem;
     margin-top: 0;
-    margin-bottom: 0.4em;
 
     @media (min-width: $breakpoint-laptop) {
         font-size: 6.5rem;
-        line-height: 0.85em;
+        line-height: 0.87em;
     }
 }
 
@@ -197,13 +188,6 @@ p, blockquote, figcaption {
     line-height: 1.3em;
     margin-bottom: 0;
 
-}
-
-blockquote, figcaption {
-}
-
-a {
-    font-size: inherit;
 }
 
 address {
@@ -216,21 +200,6 @@ address {
 
     }
 }
-
-blockquote {
-    margin: 0;
-}
-
-figure {
-    margin-left: 0;
-    margin-right: 0;
-}
-
-span {
-    font-size: inherit;
-}
-
-// ---------- TEXT -----------
 
 .caps-sans-serif {
     font-family: 'Sarabun', sans-serif;
@@ -276,7 +245,6 @@ p, blockquote, figcaption, .serif-heading {
 }
 
 .header-info-button {
-
 }
 
 // ---------- NAV ----------
@@ -338,24 +306,18 @@ p, blockquote, figcaption, .serif-heading {
 // ---------- POEM ----------
 
 .poem-block {
-    display: none;
+    height: 0;
+    visibility: hidden;
     position: relative;
-    margin-bottom: 2rem;
 
     &.ready {
-        display: block;
+        height: auto;
+        visibility: visible;
     }
 }
 
 .poem-sub-block {
-    opacity: 0;
-    transition: opacity 0.5s;
-
     margin-bottom: 1.5rem;
-
-    &.active {
-        opacity: 1;
-    }
 }
 
 .poem-line {
@@ -389,18 +351,116 @@ p, blockquote, figcaption, .serif-heading {
     // transform: translateY(-100%);
 }
 
-#pm-sub-title {
-    position: relative;
-    z-index: 20;
+#pm-blk-0 {
+
+    #pm-sub-title {
+        position: relative;
+        z-index: 20;
+    }
+
+    #pm-sub-poet {
+        display: flex;
+        align-items: center;
+        opacity: 0;
+    }
+
+    .title-line {
+        transform: translateY(50%);
+        opacity: 0;
+    }
+
+    .poem-author-text {
+        font-size: 1.5rem;
+    }
+
+    #img-down-arrow {
+        height: 1.6rem;
+    }
+    
+    #img-bush-coin {
+        top: 7.5rem;
+        left: 11rem;
+        width: 8rem;
+        opacity: 0;
+    }
+    
+    #img-oxford {   
+        width: 26rem;
+        top: 7rem;
+        left: 12rem;
+        opacity: 0;
+    }
+
+    &.animate-in {
+
+        .title-line {
+            transition: opacity 0.5s, transform 0.5s;
+            &:nth-of-type(2) {transition-delay:0.1s};
+            &:nth-of-type(3) {transition-delay:0.2s};
+            transform: translateY(0);
+            opacity: 1;
+        }
+        #pm-sub-poet {
+            transition: opacity 0.3s 0.8s;
+            opacity: 1;
+        }
+        #img-bush-coin {
+            transition: opacity 0.3s 1.0s;
+            opacity: 1;
+        }
+        #img-oxford {
+            transition: opacity 0.3s 1.2s;
+            opacity: 1;
+        }
+    }
+
+    &.animate-out {
+
+        .title-line {
+            &:nth-of-type(1) {transition-delay: 0.5s;}
+            &:nth-of-type(2) {transition-delay: 0.4s;}
+            &:nth-of-type(3) {transition-delay: 0.3s;}
+            opacity: 0;
+        }
+        #pm-sub-poet {
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+        #img-bush-coin {
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+        #img-oxford {
+            transition: opacity 0.3s;
+            opacity: 0;
+        }
+    }
 }
 
-#pm-sub-poet {
-    display: flex;
-    align-items: center;
-}
+#pm-blk-1 {
+    #pm-ln-1-0-0, #pm-ln-1-0-1 {opacity: 0;}
 
-.poem-author-text {
-    font-size: 1.5rem;
+    &.animate-in {
+        #pm-ln-1-0-0 {
+            transition: opacity 4.0s ease-in 0.5s;
+            opacity: 1;
+        }
+        #pm-ln-1-0-1 {
+            transition: opacity 2.5s 4.5s;
+            opacity: 1;
+        }
+    }
+
+    &.animate-out {
+        #pm-ln-1-0-0 {
+            transition: opacity 1.0s;
+            opacity: 0;
+        }
+        #pm-ln-1-0-1 {
+            transition: opacity 1.0s;
+            opacity: 0;
+        }
+    }
 }
 
 .instruction-scroll-down {
@@ -410,20 +470,4 @@ p, blockquote, figcaption, .serif-heading {
 .scroll-down-text {
     font-size: 1.5rem;
     margin-right: 1rem;
-}
-
-#img-down-arrow {
-    height: 1.6rem;
-}
-
-#img-bush-coin {
-    top: 7.5rem;
-    left: 11rem;
-    width: 8rem;
-}
-
-#img-oxford {   
-    width: 26rem;
-    top: 7rem;
-    left: 12rem;
 }
