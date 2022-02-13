@@ -61,10 +61,13 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
             setTimeout (function () {
                 const waitingChars = document.querySelectorAll(".custom-js-2-1-0");
                 let charNum = 0;
-                setInterval (function () {
+                let typing = setInterval (function () {
                     if (charNum < waitingChars.length) {
                         waitingChars[charNum].classList.add("animate-in");
                         charNum++;
+                    }
+                    else {
+                        clearInterval(typing);
                     }
                 }, 300);
 
@@ -82,12 +85,54 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
     },
     {
         "on-animation": function (callback) {
-            console.log("poem-blk-3 ON");
-            callback ();
+            defaultAnim (3, "in", 9200, callback);
+
+            
+            setTimeout (function () {
+                const rainedChars = document.querySelectorAll("#custom-js-3-0-0 > span");
+                let charNum = 0;
+                let rainedRipple = setInterval (function () {
+                    if (charNum < rainedChars.length) {
+                        rainedChars[charNum].classList.add("animate-in");
+                        charNum++;
+                    }
+                    else {
+                        clearInterval(rainedRipple);
+                    }
+                },50);
+            },1000);
+
+            setTimeout(function () {
+                const deathChars = document.querySelectorAll("#custom-js-3-0-1 > span");
+                let charNum = 0;
+                let deathRipple = setInterval (function () {
+                    if (charNum < deathChars.length) {
+                        deathChars[charNum].classList.add("animate-in");
+                        charNum++;
+                    }
+                    else {
+                        clearInterval(deathRipple);
+                    }
+                },50);
+            },1400);
+
         },
         "off-animation": function (callback) {
-            console.log("poem-blk-3 OFF");
-            callback ();
+            defaultAnim(3, "out", 1600, callback);
+            setTimeout (function () {
+                const rainedChars = document.querySelectorAll("#custom-js-3-0-0 > span");
+
+                for (let i = 0; i < rainedChars.length; i++) {
+                    rainedChars[i].classList.remove("animate-in");
+                }
+
+                const deathChars = document.querySelectorAll("#custom-js-3-0-1 > span");
+
+                for (let i = 0; i < deathChars.length; i++) {
+                    deathChars[i].classList.remove("animate-in");
+                }
+
+            },1600);
         }
     },
     {
@@ -121,6 +166,7 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
         }
     }
 ]
+
 let activeBlock; // which part of the poem user is on
 let transitionStatus = false; // indicates whether running transition
 const scrollDistance = 300; // scroll distance to trigger next or previous transition
