@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="https://use.typekit.net/bda4gqv.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@200;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="page-wrapper" id="poem-page-wrapper">
         <div class="page-container">
-            <header class="page-top-blk" id="poem-header">
+            <header class="page-top-blk hide" id="poem-header">
                 <div class="header-text-left caps-sans-serif">
                     Interactive <b class="sans-serif-bold">Poetry Breakdown</b>
                 </div>
@@ -27,9 +27,9 @@
                 </div>
             </header>
             <section class="page-main-blk">
-                <nav class="page-main-sidebar-left">
+                <nav class="page-main-sidebar-left hide" id="navigation">
                     <div class="stanza-nav-heading serif-alt">
-                        stanza
+                        jump&nbsp;to
                     </div>
                     <div class="stanza-nav-container">
                         <div class="stanza-status-container">
@@ -151,7 +151,7 @@
                             <div class="poem-sub-block" id="pm-sub-end">
                             </div>
                         </div>
-                        <div class="page-bottom-blk">
+                        <div class="page-bottom-blk" id="instruction-blk">
                             <div class="instruction-scroll-down">
                                 <div class="scroll-down-text serif-alt">scroll down</div>
                                 <img src="img/arrow_scroll_down.svg"  id="img-down-arrow">

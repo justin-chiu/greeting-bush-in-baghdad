@@ -5,6 +5,11 @@ let body = document.querySelector('body');
 let poemBlocks = document.querySelectorAll('.poem-block');
 let stanzaButtons = document.querySelectorAll('.stanza-nav-button');
 let scroller = document.querySelector('.page-scroller');
+let scrollPrompt = document.querySelector(".instruction-scroll-down");
+let scrollText = document.querySelector(".scroll-down-text");
+let scrollArrow = document.querySelector("#img-down-arrow");
+let nav = document.querySelector("#navigation");
+let header = document.querySelector("#poem-header");
 
 
 
@@ -16,19 +21,19 @@ const idPrefix = { // id prefixes of repeated elements
 }
 
 let defaultAnim = function (blockNum, dir, duration, callback) { // default animation for every poem block
-    if (dir == "in") {
-        poemBlocks[blockNum].classList.add("ready");
-        poemBlocks[blockNum].classList.add("animate-in");
+    if (dir == "in") { // animate in
+        poemBlocks[blockNum].classList.add("ready"); // sets width and height of block
+        poemBlocks[blockNum].classList.add("animate-in"); // class with animate-in CSS transitions
 
         setTimeout (function () {
             console.log("poem-blk-" + blockNum + " ON");
             callback();
         },duration);
     }
-    else if (dir == "out") {
-        poemBlocks[blockNum].classList.add("animate-out");
+    else if (dir == "out") { // animate out
+        poemBlocks[blockNum].classList.add("animate-out"); // class with animate-out CSS transitions
 
-        setTimeout (function () {
+        setTimeout (function () { // reset classList, log event
             poemBlocks[blockNum].classList.remove("animate-in");
             poemBlocks[blockNum].classList.remove("animate-out");
             poemBlocks[blockNum].classList.remove("ready");
@@ -57,7 +62,7 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
     },
     {
         "on-animation": function (callback) {
-            defaultAnim (2, "in", 9900, callback);
+            defaultAnim (2, "in", 10000, callback);
             setTimeout (function () {
                 const waitingChars = document.querySelectorAll(".custom-js-2-1-0");
                 let charNum = 0;
@@ -71,7 +76,7 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
                     }
                 }, 300);
 
-            }, 5200);
+            }, 5400);
         },
         "off-animation": function (callback) {
             defaultAnim (2, "out", 1600, callback);
@@ -100,7 +105,7 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
                         clearInterval(rainedRipple);
                     }
                 },50);
-            },1000);
+            },850);
 
             setTimeout(function () {
                 const deathChars = document.querySelectorAll("#custom-js-3-0-1 > span");
@@ -114,7 +119,7 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
                         clearInterval(deathRipple);
                     }
                 },50);
-            },1400);
+            },1300);
 
         },
         "off-animation": function (callback) {
@@ -168,55 +173,10 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
 ]
 
 let activeBlock; // which part of the poem user is on
-let transitionStatus = false; // indicates whether running transition
+let transitionStatus = true; // indicates whether running transition
 const scrollDistance = 300; // scroll distance to trigger next or previous transition
 
 
-/* transition object to set CSS transitions
-[
-    {
-        property: "",
-        duration: 0,
-        easing: "",
-        delay: 0,
-        amount: ""
-    }
-]
-*/
-
-// running CSS transitions using JS
-function runTransition (node, trans, transAfter) {
-
-    let transArray = [];
-
-    for (let i = 0; i < trans.length; i++) {
-        transArray.push([
-            trans[i].property, 
-            (trans[i].duration / 1000) + "s",
-            trans[i].easing,
-            (trans[i].delay / 1000) + "s"
-        ].join(" "));
-    }
-
-    node.style.transition = transArray.join(", ") + ";";
-
-    for (let i = 0; i < trans.length; i++) {
-        node.style[trans[i].property] = trans[i].amount;
-    }
-
-    let afterTiming = 0;
-
-    for (let i = 0; i < trans.length; i++) {
-        if (afterTiming < (trans[i].duration + trans[i].delay)) {
-            afterTiming = trans[i].duration + trans[i].delay;
-        }
-    }
-
-    setTimeout (function () {
-        transAfter ();    
-    }, afterTiming);
-
-}
 
 
 // set height of scrolling element to control scroll interactions
@@ -238,6 +198,26 @@ window.addEventListener('resize', function (e) { // should setup scroller whenev
 
 
 
+// start animating scroll-down indicator
+
+let arrowUp = true;
+setInterval (function () {
+
+    if (arrowUp == false) {
+        scrollArrow.classList.remove("animate");
+        scrollText.classList.remove("animate");
+        arrowUp = true;
+    }
+    else {
+        scrollArrow.classList.add("animate");
+        scrollText.classList.add("animate");
+        arrowUp = false;
+    }
+},1000);
+
+
+
+
 // set event listeners
 
 window.addEventListener ("load", function () { // on load
@@ -248,6 +228,11 @@ window.addEventListener ("load", function () { // on load
         activeBlock = 0;
         transitionStatus = false;
         console.log("activeBlock = " + activeBlock);
+        setTimeout (function () {
+            nav.classList.remove("hide");
+            header.classList.remove("hide");
+            scrollPrompt.classList.add("active");
+        },1000);
     });
 });
 
@@ -303,6 +288,7 @@ window.addEventListener("scroll", function (e) { // navigate using scroll wheel
 
 function nextBlock(stanzaFrom) { // when next stanza triggered
     if (transitionStatus == false) {
+        scrollPrompt.classList.remove("active");
         transitionStatus = true;
         // run off-animation of current block
         poemBlockAnimations[stanzaFrom]["off-animation"](function () {
@@ -312,6 +298,7 @@ function nextBlock(stanzaFrom) { // when next stanza triggered
                 document.scrollingElement.scrollTop = scrollDistance;
                 activeBlock = stanzaFrom + 1;
                 transitionStatus = false;
+                scrollPrompt.classList.add("active");
                 console.log("activeBlock = " + activeBlock);
             });
         });
@@ -320,6 +307,7 @@ function nextBlock(stanzaFrom) { // when next stanza triggered
 
 function prevBlock(stanzaFrom) { // when previous stanza triggered
     if (transitionStatus == false) {
+        scrollPrompt.classList.remove("active");
         transitionStatus = true;
         // run off-animation of current block
         poemBlockAnimations[stanzaFrom]["off-animation"](function () {
@@ -329,6 +317,7 @@ function prevBlock(stanzaFrom) { // when previous stanza triggered
                 document.scrollingElement.scrollTop = scrollDistance;
                 activeBlock = stanzaFrom - 1;
                 transitionStatus = false;
+                scrollPrompt.classList.add("active");
                 console.log("activeBlock = " + activeBlock);
             });
         });
@@ -337,6 +326,7 @@ function prevBlock(stanzaFrom) { // when previous stanza triggered
 
 function toStanza(stanzaFrom, stanzaTo) { // when specific stanza triggered
     if (transitionStatus == false) {
+        scrollPrompt.classList.remove("active");
         transitionStatus = true;
         stanzaTo = parseInt(stanzaTo.replace(idPrefix["stanza-button"], ""));
         // run off-animation of current block
@@ -347,6 +337,7 @@ function toStanza(stanzaFrom, stanzaTo) { // when specific stanza triggered
                 document.scrollingElement.scrollTop = scrollDistance;
                 activeBlock = stanzaTo;
                 transitionStatus = false;
+                scrollPrompt.classList.add("active");
                 console.log("activeBlock = " + activeBlock);
             });
         });
@@ -371,3 +362,49 @@ Info
 Notes
 
 */
+
+/* transition object to set CSS transitions
+[
+    {
+        property: "",
+        duration: 0,
+        easing: "",
+        delay: 0,
+        amount: ""
+    }
+]
+*/
+
+/* running CSS transitions using JS
+function runTransition (node, trans, transAfter) {
+
+    let transArray = [];
+
+    for (let i = 0; i < trans.length; i++) {
+        transArray.push([
+            trans[i].property, 
+            (trans[i].duration / 1000) + "s",
+            trans[i].easing,
+            (trans[i].delay / 1000) + "s"
+        ].join(" "));
+    }
+
+    node.style.transition = transArray.join(", ") + ";";
+
+    for (let i = 0; i < trans.length; i++) {
+        node.style[trans[i].property] = trans[i].amount;
+    }
+
+    let afterTiming = 0;
+
+    for (let i = 0; i < trans.length; i++) {
+        if (afterTiming < (trans[i].duration + trans[i].delay)) {
+            afterTiming = trans[i].duration + trans[i].delay;
+        }
+    }
+
+    setTimeout (function () {
+        transAfter ();    
+    }, afterTiming);
+
+}*/
