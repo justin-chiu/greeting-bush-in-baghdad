@@ -16,10 +16,17 @@ $dark-grey: #333333;
 $white: #FFFFFF;
 $black: #000000;
 $orange: #927734;
+$dark-orange: #88612d;
 
 body {
     padding: 0;
     margin: 0;
+
+    // hiding scrollbar
+    &::-webkit-scrollbar {display: none;}
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
 }
 
 // ------------ LAYOUT ------------
@@ -242,21 +249,18 @@ p, blockquote, figcaption, .serif-heading {
 // ---------- HEADER ----------
 
 #poem-header {
-    background-color: $dark-grey;
+    background-color: $dark-orange;
+    border-bottom-width: 1px;
+    border-bottom-color: $white;
+    border-bottom-style: solid;
     opacity: 1;
-    transition: opacity 1.0s 0.5s;
+    transition: opacity 0.3s;
 
     .header-text-left, .header-info-button {
-        opacity: 1;
-        transition: opacity 0.3s 1.2s;
     }
 
     &.hide {
         opacity: 0;
-
-        .header-text-left, .header-info-button {
-            opacity: 0;
-        }
     }
 }
 
@@ -332,6 +336,15 @@ p, blockquote, figcaption, .serif-heading {
     line-height: 1.1em;
     padding-top: 0;
     padding-bottom: 0;
+    transition: opacity 0.5s;
+
+    &.active {opacity: 1; cursor: pointer;}    
+    &.inactive {
+        opacity: 0.4;
+        cursor: pointer;
+        &:hover {opacity: 0.7;}
+    }
+    &.disabled {pointer-events: none;}
 }
 
 // ---------- POEM ----------
@@ -411,12 +424,8 @@ p, blockquote, figcaption, .serif-heading {
 // ----------- PARTS OF POEM -----------
 
 #poem-page-wrapper {
-    background-color: #927734;
+    background-color: $orange;
     color: $white;
-}
-
-#poem-header {
-    // transform: translateY(-100%);
 }
 
 #pm-blk-0 {

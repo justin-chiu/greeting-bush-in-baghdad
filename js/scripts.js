@@ -198,7 +198,7 @@ window.addEventListener('resize', function (e) { // should setup scroller whenev
 
 
 
-// start animating scroll-down indicator
+// scroll-down indicator
 
 let arrowUp = true;
 setInterval (function () {
@@ -217,6 +217,29 @@ setInterval (function () {
 
 
 
+// stanza-nav functions
+
+function removeActiveStanza () {
+    for (let i = 0; i < stanzaButtons.length; i++) {
+        stanzaButtons[i].classList.remove("active");
+        stanzaButtons[i].classList.add("inactive");
+        stanzaButtons[i].classList.add("disabled");
+    }
+}
+
+function setActiveStanza (active) {
+    stanzaButtons[active].classList.remove("inactive");
+    stanzaButtons[active].classList.add("active");
+}
+
+function enableStanza () {
+    for (let i = 0; i < stanzaButtons.length; i++) {
+        stanzaButtons[i].classList.remove("disabled");
+    }
+}
+
+
+
 
 // set event listeners
 
@@ -226,13 +249,15 @@ window.addEventListener ("load", function () { // on load
     poemBlockAnimations[0]["on-animation"](function () {
         document.scrollingElement.scrollTop = scrollDistance;
         activeBlock = 0;
-        transitionStatus = false;
         console.log("activeBlock = " + activeBlock);
         setTimeout (function () {
             nav.classList.remove("hide");
             header.classList.remove("hide");
+            setActiveStanza (activeBlock);
+            enableStanza ();
             scrollPrompt.classList.add("active");
-        },1000);
+            transitionStatus = false;
+        },1200);
     });
 });
 
@@ -291,12 +316,15 @@ function nextBlock(stanzaFrom) { // when next stanza triggered
         scrollPrompt.classList.remove("active");
         transitionStatus = true;
         // run off-animation of current block
+        removeActiveStanza ();
         poemBlockAnimations[stanzaFrom]["off-animation"](function () {
             // when previous function done, run on-animation of next block
+            setActiveStanza (stanzaFrom + 1);
             poemBlockAnimations[(stanzaFrom + 1)]["on-animation"](function () {
                 // when completely done
                 document.scrollingElement.scrollTop = scrollDistance;
                 activeBlock = stanzaFrom + 1;
+                enableStanza ();
                 transitionStatus = false;
                 scrollPrompt.classList.add("active");
                 console.log("activeBlock = " + activeBlock);
@@ -310,12 +338,15 @@ function prevBlock(stanzaFrom) { // when previous stanza triggered
         scrollPrompt.classList.remove("active");
         transitionStatus = true;
         // run off-animation of current block
+        removeActiveStanza ();
         poemBlockAnimations[stanzaFrom]["off-animation"](function () {
             // when previous function done, run on-animation of previous block
+            setActiveStanza (stanzaFrom - 1);
             poemBlockAnimations[(stanzaFrom - 1)]["on-animation"](function () {
                 // when completely done
                 document.scrollingElement.scrollTop = scrollDistance;
                 activeBlock = stanzaFrom - 1;
+                enableStanza ();
                 transitionStatus = false;
                 scrollPrompt.classList.add("active");
                 console.log("activeBlock = " + activeBlock);
@@ -330,12 +361,15 @@ function toStanza(stanzaFrom, stanzaTo) { // when specific stanza triggered
         transitionStatus = true;
         stanzaTo = parseInt(stanzaTo.replace(idPrefix["stanza-button"], ""));
         // run off-animation of current block
+        removeActiveStanza ();
         poemBlockAnimations[stanzaFrom]["off-animation"](function () {
             // when previous function done, run on-animation of previous block
+            setActiveStanza (stanzaTo);
             poemBlockAnimations[stanzaTo]["on-animation"](function () {
                 // when completely done
                 document.scrollingElement.scrollTop = scrollDistance;
                 activeBlock = stanzaTo;
+                enableStanza ();
                 transitionStatus = false;
                 scrollPrompt.classList.add("active");
                 console.log("activeBlock = " + activeBlock);
