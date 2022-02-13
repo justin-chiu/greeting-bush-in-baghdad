@@ -49,20 +49,35 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
     },
     {
         "on-animation": function (callback) {
-            defaultAnim (1, "in", 5500, callback);
+            defaultAnim (1, "in", 7500, callback);
         },
         "off-animation": function (callback) {
             defaultAnim (1, "out",1000, callback);
-        }
+        },
     },
     {
         "on-animation": function (callback) {
-            console.log("poem-blk-2 ON");
-            callback ();
+            defaultAnim (2, "in", 9900, callback);
+            setTimeout (function () {
+                const waitingChars = document.querySelectorAll(".custom-js-2-1-0");
+                let charNum = 0;
+                setInterval (function () {
+                    if (charNum < waitingChars.length) {
+                        waitingChars[charNum].classList.add("animate-in");
+                        charNum++;
+                    }
+                }, 300);
+
+            }, 5200);
         },
         "off-animation": function (callback) {
-            console.log("poem-blk-2 OFF");
-            callback ();
+            defaultAnim (2, "out", 1600, callback);
+            setTimeout(function () {
+                const waitingChars = document.querySelectorAll(".custom-js-2-1-0");
+                for (let i = 0; i < waitingChars.length; i++) {
+                    waitingChars[i].classList.remove("animate-in");
+                }
+            },1600);
         }
     },
     {
@@ -111,6 +126,51 @@ let transitionStatus = false; // indicates whether running transition
 const scrollDistance = 300; // scroll distance to trigger next or previous transition
 
 
+/* transition object to set CSS transitions
+[
+    {
+        property: "",
+        duration: 0,
+        easing: "",
+        delay: 0,
+        amount: ""
+    }
+]
+*/
+
+// running CSS transitions using JS
+function runTransition (node, trans, transAfter) {
+
+    let transArray = [];
+
+    for (let i = 0; i < trans.length; i++) {
+        transArray.push([
+            trans[i].property, 
+            (trans[i].duration / 1000) + "s",
+            trans[i].easing,
+            (trans[i].delay / 1000) + "s"
+        ].join(" "));
+    }
+
+    node.style.transition = transArray.join(", ") + ";";
+
+    for (let i = 0; i < trans.length; i++) {
+        node.style[trans[i].property] = trans[i].amount;
+    }
+
+    let afterTiming = 0;
+
+    for (let i = 0; i < trans.length; i++) {
+        if (afterTiming < (trans[i].duration + trans[i].delay)) {
+            afterTiming = trans[i].duration + trans[i].delay;
+        }
+    }
+
+    setTimeout (function () {
+        transAfter ();    
+    }, afterTiming);
+
+}
 
 
 // set height of scrolling element to control scroll interactions
