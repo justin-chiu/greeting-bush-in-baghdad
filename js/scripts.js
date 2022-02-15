@@ -25,48 +25,48 @@ let defaultAnim = function (blockNum, dir, duration, callback) { // default anim
         poemBlocks[blockNum].classList.add("ready"); // sets width and height of block
         poemBlocks[blockNum].classList.add("animate-in"); // class with animate-in CSS transitions
 
-        setTimeout (function () {
+        setTimeout(function () {
             console.log("poem-blk-" + blockNum + " ON");
             callback();
-        },duration);
+        }, duration);
     }
     else if (dir == "out") { // animate out
         poemBlocks[blockNum].classList.add("animate-out"); // class with animate-out CSS transitions
 
-        setTimeout (function () { // reset classList, log event
+        setTimeout(function () { // reset classList, log event
             poemBlocks[blockNum].classList.remove("animate-in");
             poemBlocks[blockNum].classList.remove("animate-out");
             poemBlocks[blockNum].classList.remove("ready");
             console.log("poem-blk-" + blockNum + " OFF");
             callback();
-        },duration);
+        }, duration);
     }
 }
 
 const poemBlockAnimations = [ // animations and custom instructions for each .poem-block 
     {
         "on-animation": function (callback) {
-            defaultAnim (0, "in", 1500, callback);
+            defaultAnim(0, "in", 1500, callback);
         },
         "off-animation": function (callback) {
-            defaultAnim (0, "out", 900, callback);
+            defaultAnim(0, "out", 900, callback);
         }
     },
     {
         "on-animation": function (callback) {
-            defaultAnim (1, "in", 7500, callback);
+            defaultAnim(1, "in", 7500, callback);
         },
         "off-animation": function (callback) {
-            defaultAnim (1, "out",1000, callback);
+            defaultAnim(1, "out", 1000, callback);
         },
     },
     {
         "on-animation": function (callback) {
-            defaultAnim (2, "in", 10000, callback);
-            setTimeout (function () {
+            defaultAnim(2, "in", 10000, callback);
+            setTimeout(function () {
                 const waitingChars = document.querySelectorAll(".custom-js-2-1-0");
                 let charNum = 0;
-                let typing = setInterval (function () {
+                let typing = setInterval(function () {
                     if (charNum < waitingChars.length) {
                         waitingChars[charNum].classList.add("animate-in");
                         charNum++;
@@ -79,24 +79,24 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
             }, 5400);
         },
         "off-animation": function (callback) {
-            defaultAnim (2, "out", 1600, callback);
+            defaultAnim(2, "out", 1600, callback);
             setTimeout(function () {
                 const waitingChars = document.querySelectorAll(".custom-js-2-1-0");
                 for (let i = 0; i < waitingChars.length; i++) {
                     waitingChars[i].classList.remove("animate-in");
                 }
-            },1600);
+            }, 1600);
         }
     },
     {
         "on-animation": function (callback) {
-            defaultAnim (3, "in", 9200, callback);
+            defaultAnim(3, "in", 9200, callback);
 
-            
-            setTimeout (function () {
+
+            setTimeout(function () {
                 const rainedChars = document.querySelectorAll("#custom-js-3-0-0 > span");
                 let charNum = 0;
-                let rainedRipple = setInterval (function () {
+                let rainedRipple = setInterval(function () {
                     if (charNum < rainedChars.length) {
                         rainedChars[charNum].classList.add("animate-in");
                         charNum++;
@@ -104,13 +104,13 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
                     else {
                         clearInterval(rainedRipple);
                     }
-                },50);
-            },850);
+                }, 50);
+            }, 850);
 
             setTimeout(function () {
                 const deathChars = document.querySelectorAll("#custom-js-3-0-1 > span");
                 let charNum = 0;
-                let deathRipple = setInterval (function () {
+                let deathRipple = setInterval(function () {
                     if (charNum < deathChars.length) {
                         deathChars[charNum].classList.add("animate-in");
                         charNum++;
@@ -118,13 +118,13 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
                     else {
                         clearInterval(deathRipple);
                     }
-                },50);
-            },1300);
+                }, 50);
+            }, 1300);
 
         },
         "off-animation": function (callback) {
             defaultAnim(3, "out", 1600, callback);
-            setTimeout (function () {
+            setTimeout(function () {
                 const rainedChars = document.querySelectorAll("#custom-js-3-0-0 > span");
 
                 for (let i = 0; i < rainedChars.length; i++) {
@@ -137,37 +137,87 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
                     deathChars[i].classList.remove("animate-in");
                 }
 
-            },1600);
+            }, 1600);
         }
     },
     {
         "on-animation": function (callback) {
-            console.log("poem-blk-4 ON");
-            callback ();
+            defaultAnim (4, "in", 8500, callback);
+
+            setTimeout(function () {
+                const frontierTown = document.querySelector("#custom-js-4-0-0");
+
+                const flashTimes = [0, 100, 150, 200, 250];
+                let flashIndicator = false;
+
+                for (let i = 0; i < flashTimes.length; i++) {
+
+                    setTimeout (function () {
+                        if (flashIndicator == false) {
+                            frontierTown.classList.add("animate-in");
+                            flashIndicator = true;
+                        }
+                        else {
+                            frontierTown.classList.remove("animate-in");
+                            flashIndicator = false;
+                        }
+                    }, flashTimes[i]);
+                }
+            }, 1300);
+
+            setTimeout(function () {
+                const ourMarshal = document.querySelector("#pm-ln-4-0-1");
+
+                const flashTimes = [0, 100, 150, 200, 250];
+                let flashIndicator = false;
+
+                for (let i = 0; i < flashTimes.length; i++) {
+
+                    setTimeout (function () {
+                        if (flashIndicator == false) {
+                            ourMarshal.classList.add("animate-in");
+                            flashIndicator = true;
+                        }
+                        else {
+                            ourMarshal.classList.remove("animate-in");
+                            flashIndicator = false;
+                        }
+                    }, flashTimes[i]);
+                }
+            }, 2800);
+
         },
         "off-animation": function (callback) {
-            console.log("poem-blk-4 OFF");
-            callback ();
+            defaultAnim (4, "out", 2200, callback);
+            document.querySelector("#custom-js-4-0-0").classList.add("animate-out");
+            document.querySelector("#pm-ln-4-0-1").classList.add("animate-out");
+            
+            setTimeout(function () {
+                document.querySelector("#custom-js-4-0-0").classList.remove("animate-in");
+                document.querySelector("#pm-ln-4-0-1").classList.remove("animate-in");
+                document.querySelector("#custom-js-4-0-0").classList.remove("animate-out");
+                document.querySelector("#pm-ln-4-0-1").classList.remove("animate-out");
+            },2200);
         }
     },
     {
         "on-animation": function (callback) {
             console.log("poem-blk-5 ON");
-            callback ();
+            callback();
         },
         "off-animation": function (callback) {
             console.log("poem-blk-5 OFF");
-            callback ();
+            callback();
         }
     },
     {
         "on-animation": function (callback) {
             console.log("poem-blk-6 ON");
-            callback ();
+            callback();
         },
         "off-animation": function (callback) {
             console.log("poem-blk-6 OFF");
-            callback ();
+            callback();
         }
     }
 ]
@@ -201,7 +251,7 @@ window.addEventListener('resize', function (e) { // should setup scroller whenev
 // scroll-down indicator
 
 let arrowUp = true;
-setInterval (function () {
+setInterval(function () {
 
     if (arrowUp == false) {
         scrollArrow.classList.remove("animate");
@@ -213,13 +263,13 @@ setInterval (function () {
         scrollText.classList.add("animate");
         arrowUp = false;
     }
-},1000);
+}, 1000);
 
 
 
 // stanza-nav functions
 
-function removeActiveStanza () {
+function removeActiveStanza() {
     for (let i = 0; i < stanzaButtons.length; i++) {
         stanzaButtons[i].classList.remove("active");
         stanzaButtons[i].classList.add("inactive");
@@ -227,12 +277,12 @@ function removeActiveStanza () {
     }
 }
 
-function setActiveStanza (active) {
+function setActiveStanza(active) {
     stanzaButtons[active].classList.remove("inactive");
     stanzaButtons[active].classList.add("active");
 }
 
-function enableStanza () {
+function enableStanza() {
     for (let i = 0; i < stanzaButtons.length; i++) {
         stanzaButtons[i].classList.remove("disabled");
     }
@@ -243,21 +293,21 @@ function enableStanza () {
 
 // set event listeners
 
-window.addEventListener ("load", function () { // on load
+window.addEventListener("load", function () { // on load
     console.log(scrollerSetup()); // setup scroller on load
     transitionStatus = true;
+    header.classList.remove("hide");
     poemBlockAnimations[0]["on-animation"](function () {
         document.scrollingElement.scrollTop = scrollDistance;
         activeBlock = 0;
         console.log("activeBlock = " + activeBlock);
-        setTimeout (function () {
+        setTimeout(function () {
             nav.classList.remove("hide");
-            header.classList.remove("hide");
-            setActiveStanza (activeBlock);
-            enableStanza ();
+            setActiveStanza(activeBlock);
+            enableStanza();
             scrollPrompt.classList.add("active");
             transitionStatus = false;
-        },1200);
+        }, 1200);
     });
 });
 
@@ -283,7 +333,7 @@ window.addEventListener("scroll", function (e) { // navigate using scroll wheel
             }
         }
         else if (document.scrollingElement.scrollTop == (scrollDistance * 2)) { // user scrolls down --> navigate to next stanza
-    
+
             if (activeBlock < 6) {
                 nextBlock(activeBlock);
             }
@@ -295,7 +345,7 @@ window.addEventListener("scroll", function (e) { // navigate using scroll wheel
             if (scrollStop) {
                 clearTimeout(scrollStop);
             }
-    
+
             scrollStop = setTimeout(function () {
                 document.scrollingElement.scrollTop = scrollDistance;
             }, 60);
@@ -316,15 +366,15 @@ function nextBlock(stanzaFrom) { // when next stanza triggered
         scrollPrompt.classList.remove("active");
         transitionStatus = true;
         // run off-animation of current block
-        removeActiveStanza ();
+        removeActiveStanza();
         poemBlockAnimations[stanzaFrom]["off-animation"](function () {
             // when previous function done, run on-animation of next block
-            setActiveStanza (stanzaFrom + 1);
+            setActiveStanza(stanzaFrom + 1);
             poemBlockAnimations[(stanzaFrom + 1)]["on-animation"](function () {
                 // when completely done
                 document.scrollingElement.scrollTop = scrollDistance;
                 activeBlock = stanzaFrom + 1;
-                enableStanza ();
+                enableStanza();
                 transitionStatus = false;
                 scrollPrompt.classList.add("active");
                 console.log("activeBlock = " + activeBlock);
@@ -338,15 +388,15 @@ function prevBlock(stanzaFrom) { // when previous stanza triggered
         scrollPrompt.classList.remove("active");
         transitionStatus = true;
         // run off-animation of current block
-        removeActiveStanza ();
+        removeActiveStanza();
         poemBlockAnimations[stanzaFrom]["off-animation"](function () {
             // when previous function done, run on-animation of previous block
-            setActiveStanza (stanzaFrom - 1);
+            setActiveStanza(stanzaFrom - 1);
             poemBlockAnimations[(stanzaFrom - 1)]["on-animation"](function () {
                 // when completely done
                 document.scrollingElement.scrollTop = scrollDistance;
                 activeBlock = stanzaFrom - 1;
-                enableStanza ();
+                enableStanza();
                 transitionStatus = false;
                 scrollPrompt.classList.add("active");
                 console.log("activeBlock = " + activeBlock);
@@ -361,15 +411,15 @@ function toStanza(stanzaFrom, stanzaTo) { // when specific stanza triggered
         transitionStatus = true;
         stanzaTo = parseInt(stanzaTo.replace(idPrefix["stanza-button"], ""));
         // run off-animation of current block
-        removeActiveStanza ();
+        removeActiveStanza();
         poemBlockAnimations[stanzaFrom]["off-animation"](function () {
             // when previous function done, run on-animation of previous block
-            setActiveStanza (stanzaTo);
+            setActiveStanza(stanzaTo);
             poemBlockAnimations[stanzaTo]["on-animation"](function () {
                 // when completely done
                 document.scrollingElement.scrollTop = scrollDistance;
                 activeBlock = stanzaTo;
-                enableStanza ();
+                enableStanza();
                 transitionStatus = false;
                 scrollPrompt.classList.add("active");
                 console.log("activeBlock = " + activeBlock);
