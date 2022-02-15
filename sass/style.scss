@@ -249,7 +249,7 @@ p, blockquote, figcaption, .serif-heading {
 // ---------- HEADER ----------
 
 #poem-header {
-    background-color: $dark-orange;
+    // background-color: $dark-grey;
     border-bottom-width: 1px;
     border-bottom-color: $white;
     border-bottom-style: solid;
@@ -338,13 +338,13 @@ p, blockquote, figcaption, .serif-heading {
     padding-bottom: 0;
     transition: opacity 0.5s;
 
-    &.active {opacity: 1; cursor: pointer;}    
+    &.active {opacity: 1; cursor: not-allowed; pointer-events: none;}    
     &.inactive {
         opacity: 0.4;
         cursor: pointer;
         &:hover {opacity: 0.7;}
     }
-    &.disabled {pointer-events: none;}
+    &.disabled {pointer-events: none; cursor: not-allowed;}
 }
 
 // ---------- POEM ----------
@@ -642,5 +642,85 @@ p, blockquote, figcaption, .serif-heading {
         }
         .pm-str-3-1-1:nth-of-type(1) {transition-delay: 0s};
         .pm-str-3-1-1:nth-of-type(2) {transition-delay: 0s};
+    }
+}
+
+#pm-blk-4 {
+    .pm-str-4-0-0, #custom-js-4-0-0, .pm-str-4-1-0, #pm-ln-4-1-1 {opacity: 0;}
+
+    #custom-js-4-1-0 {opacity: 0; color: $black;}
+
+
+    &.animate-in {
+        .pm-str-4-0-0 {
+            transition: opacity 1s;
+            opacity: 1; 
+            &:nth-of-type(1) {transition-delay: 0.5s;}
+            &:nth-of-type(2) {transition-delay: 2s;}
+        }
+        
+        .pm-str-4-1-0 {
+            opacity: 1;
+            transition: opacity 1s;
+            &:nth-of-type(1) {
+                transition-delay: 4.4s;
+            }
+            &:nth-of-type(3) {
+                transition-delay: 6.5s;
+            }
+        }
+
+        #pm-ln-4-1-1 {
+            transition: opacity 1s 7.5s;
+            opacity: 1;
+        }
+
+        #custom-js-4-1-0 {
+            color: $white;
+            opacity: 1;
+            transition: color 1s 5.1s, opacity 0s 5.1s;
+        }
+
+    }
+
+    &.animate-out {
+        .pm-str-4-0-0 {
+            opacity: 0; 
+            &:nth-of-type(1) {transition-delay: 0.6s;}
+            &:nth-of-type(2) {transition-delay: 0.6s;}
+        }
+        
+        .pm-str-4-1-0 {
+            opacity: 0;
+            &:nth-of-type(1) {
+                transition-delay: 0.2s;
+            }
+            &:nth-of-type(3) {
+                transition-delay: 0.2s;
+            }
+        }
+
+        #pm-ln-4-1-1 {
+            transition-delay: 0s;
+            opacity: 0;
+        }
+
+        #custom-js-4-1-0 {
+            transition: opacity 1s 1.2s;
+            transition-duration: 1s;
+            opacity: 0;
+        }
+    }
+
+    #custom-js-4-0-0 {
+        opacity: 0;
+        &.animate-in {opacity: 1;}
+        &.animate-out {transition: opacity 1s 0.6s; opacity: 0;}
+    }
+
+    #pm-ln-4-0-1 {
+        opacity: 0;
+        &.animate-in {opacity: 1;}
+        &.animate-out {transition: opacity 1s 0.4s; opacity: 0;}
     }
 }
