@@ -163,7 +163,7 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
                         }
                     }, flashTimes[i]);
                 }
-            }, 1300);
+            }, 1200);
 
             setTimeout(function () {
                 const ourMarshal = document.querySelector("#pm-ln-4-0-1");
@@ -188,7 +188,7 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
 
         },
         "off-animation": function (callback) {
-            defaultAnim (4, "out", 2200, callback);
+            defaultAnim (4, "out", 2000, callback);
             document.querySelector("#custom-js-4-0-0").classList.add("animate-out");
             document.querySelector("#pm-ln-4-0-1").classList.add("animate-out");
             
@@ -197,27 +197,23 @@ const poemBlockAnimations = [ // animations and custom instructions for each .po
                 document.querySelector("#pm-ln-4-0-1").classList.remove("animate-in");
                 document.querySelector("#custom-js-4-0-0").classList.remove("animate-out");
                 document.querySelector("#pm-ln-4-0-1").classList.remove("animate-out");
-            },2200);
+            },2000);
         }
     },
     {
         "on-animation": function (callback) {
-            console.log("poem-blk-5 ON");
-            callback();
+            defaultAnim(5, "in", 10700, callback);
+            scrollText.innerHTML = "back to top";
+            scrollArrow.setAttribute("src", "img/arrow_scroll_up.svg");
+            scrollText.classList.add("back-to-top");
         },
         "off-animation": function (callback) {
-            console.log("poem-blk-5 OFF");
-            callback();
-        }
-    },
-    {
-        "on-animation": function (callback) {
-            console.log("poem-blk-6 ON");
-            callback();
-        },
-        "off-animation": function (callback) {
-            console.log("poem-blk-6 OFF");
-            callback();
+            defaultAnim(5, "out", 4000, callback);
+            setTimeout (function () {
+                scrollText.innerHTML = "scroll down";
+                scrollArrow.setAttribute("src", "img/arrow_scroll_down.svg");
+                scrollText.classList.add("back-to-top");
+            }, 300);
         }
     }
 ]
@@ -264,6 +260,7 @@ setInterval(function () {
         arrowUp = false;
     }
 }, 1000);
+
 
 
 
@@ -334,7 +331,7 @@ window.addEventListener("scroll", function (e) { // navigate using scroll wheel
         }
         else if (document.scrollingElement.scrollTop == (scrollDistance * 2)) { // user scrolls down --> navigate to next stanza
 
-            if (activeBlock < 6) {
+            if (activeBlock < 5) {
                 nextBlock(activeBlock);
             }
             else {
@@ -353,6 +350,13 @@ window.addEventListener("scroll", function (e) { // navigate using scroll wheel
     }
     else {
         document.scrollingElement.scrollTop = scrollDistance;
+    }
+});
+
+// back to top
+scrollText.addEventListener("click", function (e) {
+    if (activeBlock == 5) {
+        toStanza (activeBlock, "stz-nav-0");
     }
 });
 
@@ -427,6 +431,8 @@ function toStanza(stanzaFrom, stanzaTo) { // when specific stanza triggered
         });
     }
 }
+
+alert("This webpage is best viewed at a width of 1100px. Built in VS code and Brave.");
 
 /*
 
